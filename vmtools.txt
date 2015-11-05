@@ -1,0 +1,20 @@
+VMBOX
+yum install gcc kernel-devel kernel-headers dkms make bzip2 perl
+mount -t vboxsf the_share_name /a_folder_name
+#fstab
+www        /usr/local/apache2/htdocs/    vboxsf    defaults,uid=497,gid=497,dmask=127,fmask=137    0 0
+
+
+---------------------------------------------------------------------------
+yum install net-tools kernel-headers kernel-devel gcc dracut make perl  fuse-libs
+
+vmware-uninstall-tools.pl
+vmware-config-tools.pl -d --clobber-kernel-modules=vmhgfs
+
+-----------------------------------------
+mount -t vmhgfs .host:/www /var/www/html
+
+/etc/fstab
+.host:/www /var/www/html vmhgfs defaults,uid=48,gid=48,dmask=127,fmask=137 0 0
+
+
