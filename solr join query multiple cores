@@ -1,0 +1,6 @@
+node:User
+node:Company
+
+User/select?q=*:*&
+fq={!join from=CompID to=CompID fromIndex=Company}PIndNm:'Machinery & Components'&
+fq={!join from=CompID to=CompID fromIndex=Company}AdrsCityNm:Mumbai&start=0&rows=50&wt=xml
