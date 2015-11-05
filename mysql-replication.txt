@@ -1,0 +1,46 @@
+CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000023', MASTER_LOG_POS=120;
+CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000042', MASTER_LOG_POS=120;
+-------------------------------------------------------
+CREATE USER replicant@10.10.10.%;
+GRANT REPLICATION SLAVE ON *.* TO 'replicant'@'10.10.10.%' IDENTIFIED BY 'pass';
+
+
+CREATE USER 'sudhir'@'%' IDENTIFIED BY 'passwd';
+GRANT ALL PRIVILEGES ON * . * TO 'sudhir'@'10.10.10.2' IDENTIFIED BY 'passwd' WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;
+GRANT ALL PRIVILEGES ON `sudhir\_%` . * TO 'sudhir'@'%';
+
+#############master#####################################
+server-id=1
+binlog-format   = mixed
+log-bin=mysql-bin
+innodb_flush_log_at_trx_commit=1
+sync_binlog=1
+
+
+CREATE USER replicant@10.10.10.98;
+GRANT REPLICATION SLAVE ON *.* TO replicant@10.10.10.1 IDENTIFIED BY 'pass';
+
+#############slave#####################################
+
+server-id=11
+binlog-format=mixed
+log_bin=mysql-bin
+relay-log=mysql-relay-bin
+log-slave-updates=1
+read-only=1
+default-time-zone = '+00:00'
+
+=============================================================
+
+mysqldump --skip-lock-tables --single-transaction --flush-logs --hex-blob --master-data=2 -A  > ~/dump.sql
+head dump.sql -n80 | grep "MASTER_LOG_POS"
+
+#run on slave master
+CHANGE MASTER TO MASTER_HOST='10.10.10.1',MASTER_USER='replicant',MASTER_PASSWORD='passwd', MASTER_LOG_FILE='mysql-bin.000036', MASTER_LOG_POS=381;
+
+CHANGE MASTER TO MASTER_HOST='10.10.10.2',MASTER_USER='replicant',MASTER_PASSWORD='passwd', MASTER_LOG_FILE='mysql-bin.000019', MASTER_LOG_POS=381;
+
+START SLAVE;
+
+-------------------------------------------------------------
+yum -y install system-config-firewall-tui.noarch system-config-network-tui.noarch setuptool
