@@ -1,0 +1,35 @@
+BACKUP COMMAND
+xtrabackup --defaults-file='/etc/my.cnf' --user=root --password=mysql --backup --target-dir=/home/gltech/sudhir/201505/mysql
+xtrabackup --defaults-file='/etc/my.cnf' --user=root --password=mysql --backup --target-dir=/home/gltech/sudhir/201505/inc/29 --incremental-basedir=/home/gltech/sudhir/201505/mysql
+
+RESTORE COMMAND
+xtrabackup --prepare --apply-log-only --target-dir=/home/gltech/sudhir/201505/mysql
+xtrabackup --prepare --apply-log-only --target-dir=/home/gltech/sudhir/201505/mysql/ --incremental-dir=/home/gltech/sudhir/201505/inc
+xtrabackup --prepare --target-dir=/home/gltech/sudhir/201505/mysql
+
+
+cd /data/backups/mysql/
+rsync -rvt --exclude 'xtrabackup_checkpoints' --exclude 'xtrabackup_logfile' ./ /var/lib/mysql
+chown -R mysql:mysql /var/lib/mysql/
+
+
+
+mkdir {full,incr,lsns}
+CURDATE=$(date +%Y-%m-%d_%H_%M_%S)
+mkdir -p /home/gltech/incrbkp/lsns/$CURDATE
+
+echo -n $(openssl enc -aes-256-cbc -pass pass:Password -P -md sha1| grep iv | cut -d'=' -f2) > /home/incrbkp/backups.key
+
+#FULL BACKUP 
+innobackupex --user=root --password=mysql --defaults-file=/etc/my.cnf --extra-lsndir=/home/incrbkp/lsns/$CURDATE --encrypt=AES256 --encrypt-key-file=/home/gltech/incrbkp/backups.key --no-timestamp /home/gltech/incrbkp/full/$CURDATE
+
+LAST_LSN=$(cat /home/incrbkp/lsns/$CURDATE/xtrabackup_checkpoints | grep to_lsn | cut -d'=' -f2)
+
+CURDATE=$(date +%Y-%m-%d_%H_%M_%S)
+mkdir -p /home/incrbkp/lsns/$CURDATE
+
+#INCREMENTAL BACKUP
+innobackupex --user=hello --password=world --defaults-file=/etc/my.cnf --extra-lsndir=/home/gltech/incrbkp/lsns/$CURDATE --encrypt=AES256 --encrypt-key-file=/home/gltech/incrbkp/backups.key --no-timestamp --incremental --incremental-lsn $LAST_LSN /home/gltech/incrbkp/incr/$CURDATE
+
+innobackupex --decrypt=AES256 --encrypt-key-file=/usr/local/src/incrbkp/backups.key /usr/local/src/incrbkp/full/2015-07-08_16_23_53	
+innobackupex --defaults-file=/ssd/msb/msb_5_5_360/my.sandbox.cnf --apply-log --redo-only /ssd/msb/msb_5_5_360/bkp/full/2014-04-23_01_20_46
