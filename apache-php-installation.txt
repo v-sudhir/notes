@@ -1,0 +1,86 @@
+APACHE installation
+yum install libxml2-devel libXpm-devel gmp-devel libicu-devel t1lib-devel aspell-devel openssl-devel bzip2-devel libcurl-devel libjpeg-devel libvpx-devel libpng-devel freetype-devel readline-devel libtidy-devel libxslt-devel libmcrypt-devel libmcrypto-devel libxml2-devel zlib-devel libmcrypt-devel libmhash-devel mingw32-zlib 
+
+#----------------------------------------------------
+./configure --enable-load-all-modules --with-included-apr
+#-----------------------------------------------------------
+./configure \
+--prefix=/usr/local/apache \
+--enable-so \
+--enable-auth-digest \
+--enable-rewrite \
+--enable-setenvif \
+--enable-mime \
+--enable-deflate \
+--enable-ssl \
+--with-ssl=/usr/local \
+--enable-headers \
+--enable-cgi \
+--enable-cgid \
+--with-included-apr
+
+
+
+PHP installation
+
+'./configure' \
+'--with-libdir=lib64' \
+'--with-apxs2=/usr/local/apache2/bin/apxs' \
+'--with-mysqli' \
+'--with-mcrypt' \
+'--with-pear' \
+'--with-pdo-mysql' \
+'--with-mhash' \
+'--with-zlib-dir' \
+'--with-bz2' \
+'--with-gd' \
+'--with-jpeg-dir=/usr/lib' \
+'--with-png-dir=/usr/lib' \
+'--with-freetype-dir=/usr/lib' \
+'--with-iconv' \
+'--with-xsl' \
+'--with-zlib' \
+'--with-curl' \
+'--with-gettext' \
+'--with-config-file-path=/usr/local/apache2/conf' \
+'--with-openssl' \
+'--enable-intl' \
+'--enable-exif' \
+'--enable-pcntl' \
+'--enable-gd-native-ttf' \
+'--enable-sockets' \
+'--enable-ftp' \
+'--enable-mbstring' \
+'--enable-mysqlnd' \
+'--enable-zip' \
+'--enable-soap' \
+'--enable-shmop' \
+'--enable-bcmath' \
+'--with-config-file-scan-dir=/usr/local/apache2/conf'
+
+LoadModule php5_module        modules/libphp5.so
+
+#DirectoryIndex index.html index.htm index.php
+
+vim /usr/local/apache/conf/mime.types
+
+AddType application/x-httpd-php .php
+AddType application/x-httpd-php-source .phps
+
+
+cp /usr/local/apache2/bin/apachectl /etc/init.d/apachectl
+chmod +x /etc/init.d/apachectl 
+
+Add the following lines to
+    vim /etc/init.d/apachectl
+    # chkconfig: - 85 15
+    # description: Apache is a web server. 
+
+now you can add apache service to run on reboot.
+    chkconfig --add apachectl
+    chkconfig apachectl on 
+
+---------------------------------PHP-FPM---------------
+./configure --enable-bcmath --with-bz2 --enable-calendar --with-curl --enable-exif --enable-ftp --with-gd --with-jpeg-dir --with-png-dir --with-freetype-dir --enable-gd-native-ttf --with-kerberos --enable-mbstring --with-mcrypt --with-mhash --with-mysql --with-mysqli --with-openssl --with-pcre-regex --with-pdo-mysql --with-zlib-dir --with-regex --enable-sysvsem --enable-sysvshm --enable-sysvmsg --enable-soap --enable-sockets --with-xmlrpc --enable-zip --with-zlib --enable-inline-optimization --enable-mbregex --enable-opcache --enable-fpm --prefix=/usr/local/php
+make
+make install
