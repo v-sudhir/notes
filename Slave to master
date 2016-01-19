@@ -1,0 +1,19 @@
+#Slave to master
+#stop slave and remove slave information
+STOP SLAVE
+RESET SLAVE ALL
+
+#remove from MY.CNF 
+read-only=1
+
+#this should shows no replication configuration.
+SHOW SLAVE STATUS 
+
+#This should show master configuration.
+SHOW MASTER STATUS;
+
+#on slave 2
+slave stop;
+CHANGE MASTER TO MASTER_HOST='10.10.10.%', MASTER_LOG_FILE='mysql-bin.000002', MASTER_LOG_POS=19085;
+slave start;
+show slave status\G
