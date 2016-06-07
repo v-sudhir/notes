@@ -1,1 +1,1 @@
-mysqldbcompare --server2=user:password@192.168.1.11 --server1=user:pass@192.168.1.10 --difftype=sql db:db --run-all-tests --skip-data-check --skip-row-count --skip-checksum-table
+mysqldbcompare --server1=user:password@192.168.1.11 --server2=user:pass@192.168.1.10 --difftype=sql db:db --changes-for=server2 --run-all-tests --skip-data-check --skip-row-count --skip-checksum-table
