@@ -17,4 +17,7 @@ mount -t vmhgfs .host:/www /var/www/html
 /etc/fstab
 .host:/www /var/www/html vmhgfs defaults,uid=48,gid=48,dmask=127,fmask=137 0 0
 
+/etc/rc.local
+mount -t vmhgfs -o dmask=027,fmask=137,gid=48,uid=48 .host:/www /var/www/html
+
 
