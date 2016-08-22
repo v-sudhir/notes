@@ -19,6 +19,7 @@ mount -t vmhgfs .host:/www /var/www/html
 
 /etc/rc.local
 mount -t vmhgfs -o dmask=027,fmask=137,gid=48,uid=48 .host:/www /var/www/html
+chmod +x /etc/rc.local
 
 chcon -R -t httpd_sys_content_t /var/www/html
 
