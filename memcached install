@@ -1,0 +1,11 @@
+
+Add memcache into selinux
+
+# aureport --avc | tail -n 1
+4021. 09/08/2011 03:23:38 httpd system_u:system_r:httpd_t:s0 42 tcp_socket name_connect system_u:object_r:memcache_port_t:s0 denied 31536
+
+# setsebool -P httpd_can_network_memcache 1
+# getsebool httpd_can_network_memcache
+httpd_can_network_memcache --> on
+
+getsebool -a | grep httpd | grep off$
