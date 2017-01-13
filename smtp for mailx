@@ -1,0 +1,11 @@
+echo "This is the message body and contains the message" | mailx -v \
+-r "noreply@example.com" \
+-s "This is the subject" \
+-S smtp="email-smtp.us-east-1.amazonaws.com:587" \
+-S smtp-use-starttls \
+-S smtp-auth=login \
+-S smtp-auth-user="xxx" \
+-S smtp-auth-password="xxx" \
+-S ssl-verify=ignore \
+-S nss-config-dir="/etc/pki/nssdb" \
+sudhirv@example.com
