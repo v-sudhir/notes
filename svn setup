@@ -1,0 +1,46 @@
+Installing SVN
+
+chkconfig iptables off
+SELINUX=disabled
+yum install subversion mod_dav_svn
+mkdir /svn
+svnadmin create /var/svn/glweb
+chown -R apache.apache /var/svn/glweb
+chcon -h system_u:object_r:httpd_sys_content_t /var/svn/glweb
+chcon -R -h apache:object_r:httpd_sys_content_t /var/svn/glweb
+htpasswd -cm /var/svn/.gl_users sudhir
+
+
+	
+<location /repos>
+DAV svn
+# SVN path
+SVNParentPath /var/svn/
+AuthType Basic
+AuthName "Authorization Realm"
+#password file path
+AuthUserFile /var/svn/.gl_users
+Require valid-user
+</location>
+
+service httpd restart
+mkdir -p /tmp/svn/{trunk,branches,tags}
+svn import -m 'Initializing basic repository structure' /tmp/svn/ http://192.168.1.110/repos/glweb/
+
+/usr/local/bin/svn checkout http://127.0.0.1/repos/glweb/trunk/ /home/web/www1/
+
+#Setting up the hook scripts:
+cp /var/svn/glweb/hooks/post-commit.tmpl /var/svn/glweb/hooks/post-commit
+chmod +x /var/svn/glweb/hooks/post-commit
+
+#Now edit the post-commit script and comment the follow two lines at the bottom, and add the following line to it.
+
+#commit-email.pl "$REPOS" "$REV" commit-watchers@example.org
+
+#log-commit.py --repository "$REPOS" --revision "$REV"
+
+/usr/local/bin/svn --username "user" --password "password" --non-interactive  update /home/web/www1/ >> /var/svn/logs/post-commit.log
+
+mkdir /var/svn/logs/
+touch /var/svn/logs/post-commit.log
+chown -Rv web.web /var/svn/
