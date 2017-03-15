@@ -1,5 +1,10 @@
 VMBOX
 yum install gcc kernel-devel kernel-headers dkms make bzip2 perl
+
+KERN_DIR=/usr/src/kernels/`uname -r`
+export KERN_DIR
+./VBoxLinuxAdditions.run
+
 mount -t vboxsf the_share_name /a_folder_name
 #fstab
 www        /usr/local/apache2/htdocs/    vboxsf    defaults,uid=497,gid=497,dmask=127,fmask=137    0 0
