@@ -9,6 +9,12 @@ mount -t vboxsf the_share_name /a_folder_name
 #fstab
 www        /usr/local/apache2/htdocs/    vboxsf    defaults,uid=497,gid=497,dmask=127,fmask=137    0 0
 
+# vim /etc/rc.local
+# mount -t vboxsf -o dmask=022,fmask=133,gid=993,uid=995 vol /var/www/html
+# chmod +x /etc/rc.local
+# umount /var/www/html
+
+
 
 ---------------------------------------------------------------------------
 yum install net-tools kernel-headers kernel-devel gcc dracut make perl  fuse-libs
