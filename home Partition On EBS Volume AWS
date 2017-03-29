@@ -1,0 +1,30 @@
+# show mount points
+$ lsblk
+
+#format partition
+mkfs -t ext4 /dev/xvdh
+
+#mount new partition
+$ mount /dev/xvdh /mnt/newhome
+
+#copy home content to newhome
+$ rsync -aulvXpogtr /home/* /mnt/newhome/
+
+#set selinux attributes
+$ chcon -t home_root_t /mnt/newhome
+
+#unmount
+umount /mnt/newhome
+
+#backup home
+$ mv /home/ /home.old
+
+#make home directory
+$ mkdir /home
+
+#mount to home
+$ mount /dev/xvdh /home
+
+#mount at boot
+$ echo "/dev/xvdh /home ext4 noatime 0 0" >> /etc/fstab
+
