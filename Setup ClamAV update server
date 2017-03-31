@@ -1,0 +1,27 @@
+$ vim clam_daily_get.sh
+#!/bin/sh
+cd /tmp
+wget http://database.clamav.net/daily.cvd
+wget http://database.clamav.net/main.cvd
+wget http://database.clamav.net/bytecode.cvd
+mv main.cvd /var/www/html/
+mv daily.cvd /var/www/html/
+
+$ vim clam_get.sh
+#!/bin/sh
+#This script checks the Clam DNS record for latest version, and then downloads it.
+cd /tmp
+ver=`host -t txt current.cvd.clamav.net > /tmp/version.txt && awk -F":" '{print $3}' /tmp/version.txt`
+dl="daily-$ver.cdiff"
+wget http://database.clamav.net/$dl
+mv /tmp/$dl /var/www/html/
+
+59 11 * * * /bin/sh /home/ec2-user/clam_daily_get.sh
+15 * * * * /bin/sh /home/ec2-user/clam_get.sh
+
+#change /etc/freshclam.conf on your clients
+DatabaseMirror ipaddress
+
+#Debug
+$ chcon -R -v -t httpd_sys_rw_content_t *
+$ semanage fcontext -l | grep html
