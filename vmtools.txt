@@ -34,6 +34,8 @@ chmod +x /etc/rc.local
 
 --------------------------------
 # if selinux os on
+$ getsebool httpd_use_nfs
+$ setsebool -P httpd_use_nfs=1
 
 $ yum install -y policycoreutils-python
 $ vi httpd_t.te
