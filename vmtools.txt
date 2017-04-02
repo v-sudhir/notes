@@ -48,10 +48,8 @@ require {
         type vmblock_t;
         class file { write getattr setattr read create open };
 }
-
-#============= httpd_t ==============
-$ allow httpd_t vmblock_t:file { write getattr setattr read create open };
-$ allow httpd_t vmblock_t:dir { write rmdir setattr read remove_name create add_name };
+allow httpd_t vmblock_t:file { write getattr setattr read create open };
+allow httpd_t vmblock_t:dir { write rmdir setattr read remove_name create add_name };
 
 $ checkmodule -M -m -o httpd_t.mod httpd_t.te
 $ semodule_package -o httpd_t.pp -m httpd_t.mod
