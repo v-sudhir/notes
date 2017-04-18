@@ -1,0 +1,21 @@
+"Sudhir
+set nocompatible
+set backspace=indent,eol,start
+syntax on
+filetype plugin indent on
+" colorscheme solarized
+if has('gui_running')
+        set background=light
+else
+        set background=dark
+endif
+let html_use_css=1
+
+set tabstop =4
+set shiftwidth=4
+set expandtab
+set nopaste
+
+set autoindent
+set nowrap
+command! Q q "Bind :Q to :q
