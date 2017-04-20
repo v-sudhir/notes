@@ -11,11 +11,15 @@ else
 endif
 let html_use_css=1
 
-set tabstop =4
-set shiftwidth=4
 set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set hlsearch
+set ignorecase
 set nopaste
-
-set autoindent
-set nowrap
+set smartcase
+set incsearch
+" set autoindent
+" set nowrap
 command! Q q "Bind :Q to :q
