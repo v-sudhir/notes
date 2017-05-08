@@ -3,15 +3,7 @@ set nocompatible
 set backspace=indent,eol,start
 syntax on
 filetype plugin indent on
-" colorscheme solarized
-if has('gui_running')
-        set background=light
-else
-        "set background=dark
-        set colorscheme evening
-endif
-let html_use_css=1
-
+hi Comment ctermfg=LightBlue
 set expandtab
 set tabstop=4
 set softtabstop=4
