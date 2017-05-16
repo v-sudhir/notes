@@ -6,6 +6,7 @@ yum install libxml2-devel libXpm-devel gmp-devel libicu-devel t1lib-devel aspell
 #-----------------------------------------------------------
 ./configure \
 --prefix=/usr/local/apache \
+--with-apxs2=/usr/local/apache2/bin/apxs \
 --enable-so \
 --enable-auth-digest \
 --enable-rewrite \
