@@ -26,6 +26,8 @@ PHP installation
 './configure' \
 '--with-libdir=lib64' \
 '--with-apxs2=/usr/local/apache2/bin/apxs' \
+'--with-config-file-path=/etc/php.d' \
+'--with-config-file-scan-dir=/etc/php.d' \
 '--with-mysqli' \
 '--with-mcrypt' \
 '--with-pear' \
@@ -42,7 +44,6 @@ PHP installation
 '--with-zlib' \
 '--with-curl' \
 '--with-gettext' \
-'--with-config-file-path=/usr/local/apache2/conf' \
 '--with-openssl' \
 '--enable-intl' \
 '--enable-exif' \
@@ -55,11 +56,11 @@ PHP installation
 '--enable-zip' \
 '--enable-soap' \
 '--enable-shmop' \
-'--enable-bcmath' \
-'--with-config-file-scan-dir=/usr/local/apache2/conf'
+'--enable-bcmath'
+
 
 LoadModule php5_module        modules/libphp5.so
-
+AddHandler php5-script .php
 #DirectoryIndex index.html index.htm index.php
 
 vim /usr/local/apache/conf/mime.types
@@ -72,13 +73,13 @@ cp /usr/local/apache2/bin/apachectl /etc/init.d/apachectl
 chmod +x /etc/init.d/apachectl 
 
 Add the following lines to
-    vim /etc/init.d/apachectl
-    # chkconfig: - 85 15
-    # description: Apache is a web server. 
+vim /etc/init.d/apachectl
+# chkconfig: - 85 15
+# description: Apache is a web server. 
 
 now you can add apache service to run on reboot.
-    chkconfig --add apachectl
-    chkconfig apachectl on 
+chkconfig --add apachectl
+chkconfig apachectl on 
 
 LoadModule php7_module        modules/libphp7.so
 AddHandler php7-script .php
