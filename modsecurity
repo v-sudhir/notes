@@ -1,0 +1,10 @@
+./configure --with-apxs=/usr/local/apache2/bin/apxs --with-apr=/usr/local/src/httpd-2.4.25/srclib/apr/ --with-apu=/usr/local/src/httpd-2.4.25/srclib/apr-util/ --with-lua=/usr/lib64/pkgconfig
+
+<IfModule security2_module>
+    Include conf/modsecurity.conf
+    Include modsecurity-crs/crs-setup.conf
+    Include modsecurity-crs/rules/*.conf
+    SecRule ARGS "mod_security_test" "t:normalisePathWin,id:99999,severity:4,msg:'Drive Access'"
+    #http://127.0.0.1/?test=mod_security_test
+</IfModule>
+
