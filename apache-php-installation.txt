@@ -26,7 +26,7 @@ PHP installation
 './configure' \
 '--with-libdir=lib64' \
 '--with-apxs2=/usr/local/apache2/bin/apxs' \
-'--with-config-file-path=/etc/php.d' \
+'--with-config-file-path=/etc' \
 '--with-config-file-scan-dir=/etc/php.d' \
 '--with-mysqli' \
 '--with-mcrypt' \
