@@ -58,16 +58,20 @@ PHP installation
 '--enable-shmop' \
 '--enable-bcmath'
 
-
+#PHP 5
 LoadModule php5_module        modules/libphp5.so
 AddHandler php5-script .php
+
+#PHP 7
+LoadModule php7_module        modules/libphp7.so
+AddHandler php7-script .php
+
+#HTTPD.conf
 #DirectoryIndex index.html index.htm index.php
 
 vim /usr/local/apache/conf/mime.types
-
 AddType application/x-httpd-php .php
 AddType application/x-httpd-php-source .phps
-
 
 cp /usr/local/apache2/bin/apachectl /etc/init.d/apachectl
 chmod +x /etc/init.d/apachectl 
@@ -81,8 +85,9 @@ now you can add apache service to run on reboot.
 chkconfig --add apachectl
 chkconfig apachectl on 
 
-LoadModule php7_module        modules/libphp7.so
-AddHandler php7-script .php
+vim /etc/profile
+export PATH=$PATH:/usr/local/bin/
+
 
 ---------------------------------PHP-FPM---------------
 ./configure --enable-bcmath --with-bz2 --enable-calendar --with-curl --enable-exif --enable-ftp --with-gd --with-jpeg-dir --with-png-dir --with-freetype-dir --enable-gd-native-ttf --with-kerberos --enable-mbstring --with-mcrypt --with-mhash --with-mysql --with-mysqli --with-openssl --with-pcre-regex --with-pdo-mysql --with-zlib-dir --with-regex --enable-sysvsem --enable-sysvshm --enable-sysvmsg --enable-soap --enable-sockets --with-xmlrpc --enable-zip --with-zlib --enable-inline-optimization --enable-mbregex --enable-opcache --enable-fpm --prefix=/usr/local/php
