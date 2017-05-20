@@ -90,7 +90,47 @@ export PATH=$PATH:/usr/local/bin/
 
 
 ---------------------------------PHP-FPM---------------
-./configure --enable-bcmath --with-bz2 --enable-calendar --with-curl --enable-exif --enable-ftp --with-gd --with-jpeg-dir --with-png-dir --with-freetype-dir --enable-gd-native-ttf --with-kerberos --enable-mbstring --with-mcrypt --with-mhash --with-mysql --with-mysqli --with-openssl --with-pcre-regex --with-pdo-mysql --with-zlib-dir --with-regex --enable-sysvsem --enable-sysvshm --enable-sysvmsg --enable-soap --enable-sockets --with-xmlrpc --enable-zip --with-zlib --enable-inline-optimization --enable-mbregex --enable-opcache --enable-fpm --prefix=/usr/local/php
+'./configure' \
+'--with-libdir=lib64' \
+'--with-config-file-path=/etc' \
+'--with-config-file-scan-dir=/etc/php.d' \
+'--with-pear' \
+'--enable-bcmath' \
+'--with-bz2' \
+'--enable-calendar' \
+'--with-curl' \
+'--enable-exif' \
+'--enable-ftp' \
+'--with-gd' \
+'--with-jpeg-dir' \
+'--with-png-dir' \
+'--with-freetype-dir' \
+'--enable-gd-native-ttf' \
+'--with-kerberos' \
+'--enable-mbstring' \
+'--with-mcrypt' \
+'--with-mhash' \
+'--with-mysql' \
+'--with-mysqli' \
+'--with-openssl' \
+'--with-pcre-regex' \
+'--with-pdo-mysql' \
+'--with-zlib-dir' \
+'--with-regex' \
+'--enable-sysvsem' \
+'--enable-sysvshm' \
+'--enable-sysvmsg' \
+'--enable-soap' \
+'--enable-sockets' \
+'--with-xmlrpc' \
+'--enable-zip' \
+'--with-zlib' \
+'--enable-inline-optimization' \
+'--enable-mbregex' \
+'--enable-opcache' \
+'--enable-fpm' \
+'--prefix=/usr/local/php'
+
 make
 make install
 
