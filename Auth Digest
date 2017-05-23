@@ -1,0 +1,16 @@
+chown -R apache.apache /usr/local/apache2/htpass
+chcon -Rv --type=httpd_sys_content_t /usr/local/apache2/htpass
+
+    <Location "/">
+        AuthType Digest
+        AuthName "users"
+        AuthDigestDomain "/" "http://example.com/"
+        
+        AuthDigestProvider file
+        AuthUserFile "/usr/local/apache2/htpass/.htpass"
+        AuthGroupFile /dev/null
+        Require valid-user
+    </Location>
+
+/usr/local/apache2/bin/htdigest -c /usr/local/apache2/htpass/.htpass_rai users username
+
