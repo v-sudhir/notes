@@ -11,6 +11,7 @@ yum install libxml2-devel libXpm-devel gmp-devel libicu-devel t1lib-devel aspell
 --enable-rewrite \
 --enable-setenvif \
 --enable-mime \
+--disable-autoindex \
 --enable-deflate \
 --enable-ssl \
 --with-ssl=/usr/local \
