@@ -92,6 +92,8 @@ export PATH=$PATH:/usr/local/bin/
 
 ---------------------------------PHP-FPM---------------
 './configure' \
+'--prefix=/usr/local/php' \
+'--enable-fpm' \
 '--with-libdir=lib64' \
 '--with-config-file-path=/etc' \
 '--with-config-file-scan-dir=/etc/php.d' \
@@ -111,13 +113,11 @@ export PATH=$PATH:/usr/local/bin/
 '--enable-mbstring' \
 '--with-mcrypt' \
 '--with-mhash' \
-'--with-mysql' \
 '--with-mysqli' \
 '--with-openssl' \
 '--with-pcre-regex' \
 '--with-pdo-mysql' \
 '--with-zlib-dir' \
-'--with-regex' \
 '--enable-sysvsem' \
 '--enable-sysvshm' \
 '--enable-sysvmsg' \
@@ -128,13 +128,46 @@ export PATH=$PATH:/usr/local/bin/
 '--with-zlib' \
 '--enable-inline-optimization' \
 '--enable-mbregex' \
-'--enable-opcache' \
-'--enable-fpm' \
-'--prefix=/usr/local/php'
+'--enable-opcache'
 
 make
 make install
 
+# Configure php-fpm
+cp php.ini-production /etc/php.ini
+cp sapi/fpm/init.d.php-fpm.in /etc/init.d/php-fpm
+cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
+cp /usr/local/php/bin/php-cgi /usr/local/apache2/cgi-bin/
+chmod +x /etc/init.d/php-fpm
+
+# Edit /etc/init.d/php-fpm
+prefix=
+exec_prefix=
+
+php_fpm_BIN=/usr/local/php/sbin/php-fpm
+php_fpm_CONF=/usr/local/php/etc/php-fpm.conf
+php_fpm_PID=/var/run/php-fpm.pid
+
+# Edit httpd.conf
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+
 <FilesMatch \.php$>
     SetHandler "proxy:fcgi://127.0.0.1:9000"
 </FilesMatch>
+
+# PHP-FPM Basic directives
+pm = dynamic
+Changes how PHP-FPM wil spin up PHP workers. The default setting uses the other settings to determine how to act. If you want a fixed number of PHP processes running, you can set this to static, if you only want to create new PHP-FPM processes when requested, use "ondemand", personally I like to use "dynamic" and set the lower limit for spare processes to 2 or 3 so that I always have PHP processes up and ready to handle connections.
+
+pm.max_children = 10
+Sets a maximum of 10 PHP-FPM Processes that are allowed to run at the same time. 10 pm.max_children should be a good place to start for most sites. Keep in mind that while this seems low, the average amount of time it takes for a PHP request to complete is somewhere in the 100ms to 200ms range, meaning that if you set this to 1 max children your site could theoretically handle around 5 - 10 requests/s which is a pretty decent amount of traffic if you have that many active connections 24/7.
+
+pm.start_servers = 4
+Sets how many PHP workers are activated when PHP-FPM starts up. Having more start servers for PHP-FPM will help to keep response times low when your site gets a sudden burst of traffic. If you configure PHP-FPM to only have 1 pm.start_servers and all of a sudden 5 people visit your site, your server will need to quickly spawn a few more processes, which can increase website load time slightly. This isn't a huge deal, but if you want to keep response times as low as possible make sure you set the start servers to something like 4 or 5 and make sure you configure the min and max spare servers for PHP-FPM to allow for whatever startserver value you pick. 
+
+pm.min_spare_servers = 4
+Sets the minimum number of idle process that PHP-FPM will allow to live. If you start PHP-FPM with 4 processes, and want at least 4 PHP-FPM processes all the time then setting this to 4 is a safe bet, if you want to start with 4 processes, but allow for up to 5 idle processes, set this value to 5. 
+
+pm.max_spare_servers= 6
+Sets the maximum number of idle processes PHP-FPM will allow to remain alive. If you want to be aggressive in terms of limiting the amount of RAM and CPU that PHP-FPM can use then you will want to configure pm.max_spare_servers to the same as, or slightly higher than pm.start_servers. You cannot set this value to be lower than the min spare servers, or start servers, otherwise PHP-FPM will not start. I would advise setting this value slightly higher than pm.start_servers
