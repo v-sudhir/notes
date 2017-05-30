@@ -157,6 +157,9 @@ LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
 </FilesMatch>
 
 # PHP-FPM Basic directives
+catch_workers_output = yes
+Redirect worker stdout and stderr into main error log. If not set, stdout and stderr will be redirected to /dev/null according to FastCGI specs.
+
 pm = dynamic
 Changes how PHP-FPM wil spin up PHP workers. The default setting uses the other settings to determine how to act. If you want a fixed number of PHP processes running, you can set this to static, if you only want to create new PHP-FPM processes when requested, use "ondemand", personally I like to use "dynamic" and set the lower limit for spare processes to 2 or 3 so that I always have PHP processes up and ready to handle connections.
 
