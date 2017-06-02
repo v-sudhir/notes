@@ -30,7 +30,7 @@ mount -t vmhgfs .host:/www /var/www/html
 
 /etc/rc.local
 mount -t vmhgfs -o dmask=022,fmask=133,gid=48,uid=48 .host:/www /var/www/html
-#vmhgfs-fuse -o allow_other,auto_unmount,umask=133,gid=33,uid=33 .host:/www /var/www/html
+#vmhgfs-fuse -o allow_other,auto_unmount,umask=133,gid=48,uid=48 .host:/htdocs /var/www/html
 chmod +x /etc/rc.local
 
 --------------------------------
