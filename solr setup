@@ -1,0 +1,24 @@
+cd /usr/local/src
+wget "https://archive.apache.org/dist/lucene/solr/6.5.1/solr-6.5.1.tgz"
+
+# extract the service installation file:
+$ tar xzf solr-6.5.1.tgz solr-6.5.1/bin/install_solr_service.sh --strip-components=2
+
+$ ./install_solr_service.sh solr-6.5.1.tgz -u solr -d /var/solr
+
+# Run the given command, mention the name of the collection (here gettingstarted) and specify its configurations.
+$ sudo su - solr -c "/opt/solr/bin/solr create -c test -n data_driven_schema_configs"
+
+# DELETE collection
+$ sudo su - solr -c "/opt/solr/bin/solr delete -c test"
+
+
+
+#Switching from Managed Schema to Manually Edited schema.xml
+Rename the managed-schema file to schema.xml.
+Modify solrconfig.xml to replace the schemaFactory class.
+Remove any ManagedIndexSchemaFactory definition if it exists. 
+
+#Add a  ClassicIndexSchemaFactory definition as shown below
+<schemaFactory class="ClassicIndexSchemaFactory"/>
+#remove unknown fields
