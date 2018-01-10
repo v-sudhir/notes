@@ -1,0 +1,2 @@
+
+mysqldump -uroot -p --routines --triggers --all-databases --skip-lock-tables | gzip > mysql_2018010.sql.gz
