@@ -1,18 +1,20 @@
-"Sudhir
-set nocompatible
-set backspace=indent,eol,start
-syntax on
-filetype plugin indent on
+
+filetype plugin indent on " use the file type plugins
 hi Comment ctermfg=LightBlue
-set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+syntax on                 " Syntax highlighting
+set number nu             " Line numbers
+set cursorline            " Color the cursorline
+set autoindent            " Auto indenting
+set smartindent           " Smart indenting
+set tabstop=4           " Tab width
+set softtabstop=4       " Soft tab width
+set shiftwidth=4        " Shift width
+set expandtab           " Use spaces instead of tabs
+
 set hlsearch
 set ignorecase
 set nopaste
 set smartcase
 set incsearch
-" set autoindent
 " set nowrap
 command! Q q "Bind :Q to :q
