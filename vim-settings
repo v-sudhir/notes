@@ -2,6 +2,7 @@
 filetype plugin indent on " use the file type plugins
 hi Comment ctermfg=LightBlue
 syntax on                 " Syntax highlighting
+colorscheme desert
 set number nu             " Line numbers
 set cursorline            " Color the cursorline
 set autoindent            " Auto indenting
