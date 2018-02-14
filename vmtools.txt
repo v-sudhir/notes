@@ -28,6 +28,9 @@ mount -t vmhgfs .host:/www /var/www/html
 /etc/fstab
 .host:/www /var/www/html vmhgfs defaults,uid=48,gid=48,dmask=127,fmask=137 0 0
 
+#Fedora oracle vm
+htdocs /var/www/html vboxsf noauto,x-systemd.automount,x-systemd.device-timeout=10,uid=48,gid=48,dmask=022,fmask=133 0 0
+
 /etc/rc.local
 mount -t vmhgfs -o dmask=022,fmask=133,gid=48,uid=48 .host:/www /var/www/html
 #vmhgfs-fuse -o allow_other,auto_unmount,umask=133,gid=48,uid=48 .host:/htdocs /var/www/html
