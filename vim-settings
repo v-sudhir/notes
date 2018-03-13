@@ -1,21 +1,14 @@
-
-filetype plugin indent on " use the file type plugins
+filetype plugin indent on   " use the file type plugins
+syntax on   " Syntax highlighting
 hi Comment ctermfg=LightBlue
-syntax on                 " Syntax highlighting
-colorscheme desert
-set number nu             " Line numbers
-set cursorline            " Color the cursorline
-set autoindent            " Auto indenting
-set smartindent           " Smart indenting
-set tabstop=4           " Tab width
-set softtabstop=4       " Soft tab width
-set shiftwidth=4        " Shift width
-set expandtab           " Use spaces instead of tabs
-
 set hlsearch
 set ignorecase
 set nopaste
 set smartcase
 set incsearch
+set tabstop=4   " Tab width
+set softtabstop=4   " Soft tab width
+set shiftwidth=4    " Shift width
+set expandtab   " Use spaces instead of tabs
 " set nowrap
 command! Q q "Bind :Q to :q
