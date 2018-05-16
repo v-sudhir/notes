@@ -5,20 +5,50 @@ wget "https://archive.apache.org/dist/lucene/solr/6.5.1/solr-6.5.1.tgz"
 $ tar xzf solr-6.5.1.tgz solr-6.5.1/bin/install_solr_service.sh --strip-components=2
 
 $ ./install_solr_service.sh solr-6.5.1.tgz -u solr -d /var/solr
+$ #./install_solr_service.sh solr-7.3.0.tgz -i /opt -d /solr -u solr -s solr -p 8983
+
 
 # Run the given command, mention the name of the collection (here gettingstarted) and specify its configurations.
-$ sudo su - solr -c "/opt/solr/bin/solr create -c test -n data_driven_schema_configs"
+$ sudo su - solr -c "/opt/solr/bin/solr create -c storeshopper -n data_driven_schema_configs"
 
 # DELETE collection
 $ sudo su - solr -c "/opt/solr/bin/solr delete -c test"
 
+# RELOAD collection
+curl "http://127.0.0.1:8983/solr/admin/cores?action=RELOAD&core=storeshopper"
+curl "http://127.0.0.1:8983/solr/storeshopper/update?stream.body=<delete><query>*:*</query></delete>&commit=true"
 
 
 #Switching from Managed Schema to Manually Edited schema.xml
 Rename the managed-schema file to schema.xml.
 Modify solrconfig.xml to replace the schemaFactory class.
-Remove any ManagedIndexSchemaFactory definition if it exists. 
+Remove any ManagedIndexSchemaFactory definition if it exists.
 
 #Add a  ClassicIndexSchemaFactory definition as shown below
 <schemaFactory class="ClassicIndexSchemaFactory"/>
 #remove unknown fields
+
+
+# Configuring Solr Master
+Edit core.properties
+    enable.master=true
+    enable.slave=false
+
+
+# Configuring Solr slave
+Edit core.properties
+    enable.master=false
+    enable.slave=true
+
+Edit solrconfig.xml
+    <requestHandler name="/replication" class="solr.ReplicationHandler" >
+        <lst name="master">
+            <str name="enable">${enable.master:false}</str>
+            <str name="replicateAfter">commit</str>
+        </lst>
+        <lst name="slave">
+            <str name="enable">${enable.slave:false}</str>
+            <str name="masterUrl">http://10.0.4.51:8983/solr/${solr.core.name}/replication</str>
+            <str name="pollInterval">00:00:20</str>
+        </lst>
+    </requestHandler>
