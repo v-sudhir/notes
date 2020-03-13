@@ -1,0 +1,15 @@
+
+netstat -nat | awk '{print $6}' | sort | uniq -c | sort -n
+
+vi /etc/sysctl.conf
+
+# Decrease TIME_WAIT seconds
+net.ipv4.tcp_fin_timeout = 30
+
+# Recycle and Reuse TIME_WAIT sockets
+net.ipv4.tcp_tw_recycle = 1
+net.ipv4.tcp_tw_reuse = 1
+
+netstat -nat | awk '{print $6}' | sort | uniq -c | sort -n
+
+
