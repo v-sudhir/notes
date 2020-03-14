@@ -49,9 +49,6 @@ net.ipv4.conf.default.secure_redirects = 0
 # Ignore all ICMP ECHO and TIMESTAMP requests sent to it via broadcast/multicast
 net.ipv4.icmp_echo_ignore_broadcasts = 1
  
-# Prevent against the common 'syn flood attack'
-net.ipv4.tcp_syncookies = 1
- 
 # Enable source validation by reversed path, as specified in RFC1812
 net.ipv4.conf.all.rp_filter = 1
  
