@@ -1,0 +1,15 @@
+You can get your current inotify file watch limit by executing:
+
+$ cat /proc/sys/fs/inotify/max_user_watches
+
+When this limit is not enough to monitor all files inside a directory, the limit must be increased for Listen to work properly.
+
+You can set a new limit temporary with:
+
+$ sudo sysctl fs.inotify.max_user_watches=524288
+$ sudo sysctl -p
+
+If you like to make your limit permanent, use:
+
+$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
+$ sudo sysctl -p
