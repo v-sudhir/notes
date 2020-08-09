@@ -1,0 +1,16 @@
+#see existing policies
+semanage fcontext -l
+
+#Create a policy
+semanage fcontext -a -t httpd_sys_content_t "/webapps(/.*)?"
+semanage fcontext -a -t httpd_log_t "/webapps/logs(/.*)?"
+semanage fcontext -a -t httpd_cache_t "/webapps/cache(/.*)?"
+
+semanage fcontext -a httpd_sys_rw_content_t "/webapps/app1/public_html/uploads(/.*)?"
+
+#Apply the policies
+restorecon -Rv /webapps
+
+getsebool -a | grep httpd
+setsebool -P httpd_can_network_connect 1
+setsebool -P httpd_can_network_connect_db 1
