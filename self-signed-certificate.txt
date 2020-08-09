@@ -1,7 +1,0 @@
-
-openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -sha256 -keyout gldev.in.key -out gldev.in.crt -config openssl.cnf
-openssl x509 -in gldev.in.crt -text -noout | less
-
-SSLEngine on
-SSLCertificateFile "/usr/local/apache2/conf/cert/gldev.in.crt"
-SSLCertificateKeyFile "/usr/local/apache2/conf/cert/gldev.in.key"
