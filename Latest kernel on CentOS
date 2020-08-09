@@ -1,8 +1,0 @@
-yum install http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
-yum install kernel-ml
-yum swap kernel-headers -- kernel-ml-headers
-yum swap kernel-tools-libs -- kernel-ml-tools-libs
-yum install kernel-ml-tools
-yum swap kernel-devel -- kernel-ml-devel
-yum remove kernel
-
