@@ -1,0 +1,17 @@
+Boosts
+In addition to the scoring factors mentioned above, the primary method of modifying document scores is by boosting.
+There are 2 kinds of boosts. Index-time and Query-time boosts.
+Index-time boosts are applied when adding documents, and apply to the entire document or to specific fields.
+Query-time boosts are applied when constructing a search query, and apply to specific fields.
+Query boosts are applied by appending the caret character ^ followed by a positive number to query clauses.
+
+title:foo OR (title:foo AND title:bar)^2.0 OR title:"foo bar"^10
+
+Negative boosts
+
+Whilst Lucene allows negative boosts, Solr does not.
+The only way to meaningfully perform a negative boost, is by applying a positive boost to a negative query. For example:
+
+(*:* -title:foo)^2.0
+
+This boosts all documents which don't have "foo" in the title by 2.0, thereby effectively applying a down boost to documents which do.
