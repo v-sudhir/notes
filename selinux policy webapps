@@ -14,3 +14,23 @@ restorecon -Rv /webapps
 getsebool -a | grep httpd
 setsebool -P httpd_can_network_connect 1
 setsebool -P httpd_can_network_connect_db 1
+
+
+Enable php-fpm slow log
+
+module php_ptrace 1.0.0;
+require {
+    type httpd_t;
+    class process ptrace;
+    class capability sys_ptrace;
+}
+
+#============= httpd_t ==============
+allow httpd_t self:process ptrace;
+allow httpd_t self:capability sys_ptrace;
+
+
+
+checkmodule -M -m -o php_ptrace.mod php_ptrace.te
+semodule_package -o php_ptrace.pp -m php_ptrace.mod
+semodule -i php_ptrace.pp
