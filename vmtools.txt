@@ -1,2 +1,5 @@
 VMBOX
 yum install gcc kernel-devel kernel-headers dkms make bzip2 perl
+sh ./VBoxLinuxAdditions.run --nox11
+
+# The --nox11 option tells the installer not to spawn an xterm window.
