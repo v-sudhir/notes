@@ -1,4 +1,5 @@
-VMBOX
+Installing VirtualBox Guest Additions
+
 yum install gcc kernel-devel kernel-headers dkms make bzip2 perl
 sh ./VBoxLinuxAdditions.run --nox11
 
