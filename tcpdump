@@ -1,0 +1,15 @@
+[root@dev mysql]# nc -vz localhost 3306
+nc: connect to localhost port 3306 (tcp) failed: Connection refused
+Connection to localhost 3306 port [tcp/mysql] succeeded!
+
+
+The reason is the first connection is against ::1 (IPv6), and the second to 127.0.0.1.
+This could be seen with: tcpdump -i lo -n
+
+
+[root@centos mysql]# grep localhost /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+
+iptraf doesn't show this correctly, hidding the ipv6 connection under the ipv4 connection
