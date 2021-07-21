@@ -11,4 +11,5 @@ set softtabstop=4   " Soft tab width
 set shiftwidth=4    " Shift width
 set expandtab   " Use spaces instead of tabs
 " set nowrap
+set t_Co=256
 command! Q q "Bind :Q to :q
