@@ -1,3 +1,0 @@
-openssl pkcs12 -in private.pfx  -nocerts -nodes | openssl rsa -out privkey.pem
-openssl pkcs12 -in private.pfx -clcerts -nokeys -out domain.crt
-openssl pkcs12 -in private.pfx -out domain-ca.crt -nodes -nokeys -cacerts
