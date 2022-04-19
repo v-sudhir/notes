@@ -1,0 +1,1 @@
+certbot certonly --agree-tos --email xxx@example.com --server https://acme-v02.api.letsencrypt.org/directory --manual -d *.example.com -d example.com
