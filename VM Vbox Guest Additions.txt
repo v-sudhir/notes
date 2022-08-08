@@ -1,10 +1,9 @@
 Installing VirtualBox Guest Additions
 
-```
 $ yum install gcc kernel-devel kernel-headers dkms make bzip2 perl
 $ yum install binutils gcc make patch libgomp glibc-headers glibc-devel elfutils-libelf-devel kernel-headers kernel-devel
 $ sh ./VBoxLinuxAdditions.run --nox11
-```
+
 # The --nox11 option tells the installer not to spawn an xterm window.
 
 
