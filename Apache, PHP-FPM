@@ -1,3 +1,42 @@
+Install php 8.0, apache, mysql server and memcached on CentOS 8
+
+yum install epel-release
+yum update -y
+
+yum module reset php
+yum module enable php:8.0
+
+# Install default packages
+
+yum install php-opcache php-ffi php-pear.noarch php-pdo php-mysqlnd php-mbstring php-intl php-fpm php-devel php-cli php-bcmath httpd memcached mysql-server
+
+# Install php-memcached extension
+yum install libmemcached-devel zlib-devel fastlz-devel libevent-devel
+
+pecl install igbinary
+vi /etc/php.d/40-igbinary.ini
+    extension=igbinary.so
+
+pecl install msgpack
+vi /etc/php.d/40-msgpack.ini
+    extension=msgpack.so
+
+pecl install memcached
+vi /etc/php.d/50-memcached.ini
+    extension=memcached.so
+
+# auto start services
+systemctl enable php-fpm mysqld httpd
+
+systemctl start php-fpm mysqld httpd
+
+# set password
+mysql -u root -p
+    ALTER USER 'root'@'localhost' IDENTIFIED BY 'Mysql.123';
+
+# Add apache user to vbox user
+usermod -a -G vboxsf apache
+==========================================================================================================================
 APACHE installation
 yum install libxml2-devel libXpm-devel gmp-devel libicu-devel t1lib-devel aspell-devel openssl-devel bzip2-devel libcurl-devel libjpeg-devel libvpx-devel libpng-devel freetype-devel readline-devel libtidy-devel libxslt-devel libmcrypt-devel libmcrypto-devel libxml2-devel zlib-devel libmcrypt-devel libmhash-devel mingw32-zlib 
 
