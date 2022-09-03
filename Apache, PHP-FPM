@@ -8,7 +8,7 @@ yum module enable php:8.0
 
 # Install default packages
 
-yum install php-opcache php-ffi php-pear.noarch php-pdo php-mysqlnd php-mbstring php-intl php-fpm php-devel php-cli php-bcmath httpd memcached mysql-server
+yum install php-opcache php-ffi php-pear.noarch php-pdo php-mysqlnd php-mbstring php-intl php-fpm php-devel php-cli php-bcmath php-pecl-zip httpd memcached mysql-server
 
 # Install php-memcached extension
 yum install libmemcached-devel zlib-devel fastlz-devel libevent-devel
