@@ -26,9 +26,9 @@ vi /etc/php.d/50-memcached.ini
     extension=memcached.so
 
 # auto start services
-systemctl enable php-fpm mysqld httpd
+systemctl enable php-fpm mysqld httpd memcached
 
-systemctl start php-fpm mysqld httpd
+systemctl start php-fpm mysqld httpd memcached
 
 # set password
 mysql -u root -p
