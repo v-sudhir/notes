@@ -38,98 +38,40 @@ mysql -u root -p
 usermod -a -G vboxsf apache
 
 vi /etc/my.cnf
+#for mysql 8 with 1GB Ram
 
-bind_address        = 127.0.0.1 # Change to 0.0.0.0 to allow remote connections
-max_allowed_packet  = 256M
+bind_address        = 0.0.0.0 # Change to 0.0.0.0 to allow remote connections
 max_connect_errors  = 1000000
 
 skip_external_locking
 skip_name_resolve # Disabling DNS resolution
-
-# === InnoDB Settings ===
-default_storage_engine          = InnoDB
-innodb_buffer_pool_instances    = 4     # Use 1 instance per 1GB of InnoDB pool size - max is 64
-innodb_buffer_pool_size         = 4G    # Use up to 70-80% of RAM
-innodb_file_per_table           = 1
-innodb_flush_log_at_trx_commit  = 0
-innodb_flush_method             = O_DIRECT
-innodb_log_buffer_size          = 16M
-innodb_log_file_size            = 1G
-innodb_sort_buffer_size         = 4M    # UPD - Defines how much data is read into memory for sorting operations before writing to disk (default is 1M / max is 64M)
-innodb_stats_on_metadata        = 0
-innodb_use_fdatasync            = 1     # Only (!) for MySQL v8.0.26+
-
-#innodb_temp_data_file_path     = ibtmp1:64M:autoextend:max:20G # Control the maximum size for the ibtmp1 file
-#innodb_thread_concurrency      = 4  # Optional: Set to the number of CPUs on your system (minus 1 or 2) to better
-                                # contain CPU usage. E.g. if your system has 8 CPUs, try 6 or 7 and check
-                                # the overall load produced by MySQL/MariaDB.
-
-innodb_read_io_threads          = 64
-innodb_write_io_threads         = 64
-#innodb_io_capacity             = 2000  # Depends on the storage tech - use 2000 for SSD, more for NVMe
-#innodb_io_capacity_max         = 4000  # Usually double the value of innodb_io_capacity
-
-key_buffer_size                 = 24M   # UPD
-
-low_priority_updates            = 1
-concurrent_insert               = 2
-
-# === Connection Settings ===
-max_connections                 = 100   # UPD - Important: high no. of connections = high RAM consumption
-
-back_log                        = 512
-thread_cache_size               = 100
-thread_stack                    = 192K
+skip_ssl
 
 interactive_timeout             = 10
 wait_timeout                    = 10
 
-# === Buffer Settings ===
-# Handy tip for managing your database's RAM usage:
-# The following values should be treated carefully as they are added together and then multiplied by your "max_connections" value.
-# Other options will also add up to RAM consumption (e.g. tmp_table_size). So don't go switching your "join_buffer_size" to 1G, it's harmful & inefficient.
-# Use one of the database diagnostics tools mentioned at the top of this file to count your database's potential total RAM usage, so you know if you are within
-# reasonable limits. Remember that other services will require enough RAM to operate properly (like Apache or PHP-FPM), so set your limits wisely.
-join_buffer_size                = 4M    # UPD
-read_buffer_size                = 3M    # UPD
-read_rnd_buffer_size            = 4M    # UPD
-sort_buffer_size                = 4M    # UPD
+binlog_expire_logs_seconds      = 86400
 
-# === Table Settings ===
-# In systemd managed systems like Ubuntu 16.04+ or CentOS 7+, you need to perform an extra action for table_open_cache & open_files_limit
-# to be overriden (also see comment next to open_files_limit).
-# E.g. for MySQL 5.7, please check: https://dev.mysql.com/doc/refman/5.7/en/using-systemd.html
-# and for MariaDB check: https://mariadb.com/kb/en/library/systemd/
-table_definition_cache          = 40000 # UPD
-table_open_cache                = 40000 # UPD
-open_files_limit                = 60000 # UPD - This can be 2x to 3x the table_open_cache value or match the system's
-                                        # open files limit usually set in /etc/sysctl.conf and /etc/security/limits.conf
-                                        # In systemd managed systems this limit must also be set in:
-                                        # - /etc/systemd/system/mysql.service.d/override.conf (for MySQL 5.7+ in Ubuntu) or
-                                        # - /etc/systemd/system/mysqld.service.d/override.conf (for MySQL 5.7+ in CentOS) or
-                                        # - /etc/systemd/system/mariadb.service.d/override.conf (for MariaDB)
-                                        # otherwise changing open_files_limit will have no effect.
-                                        #
-                                        # To edit the right file execute:
-                                        # $ systemctl edit mysql (or mysqld or mariadb)
-                                        # and set "LimitNOFILE=" to something like 100000 or more (depending on your system limits for MySQL)
-                                        # or use "LimitNOFILE=infinity" for MariaDB only.
-                                        # Finally merge the changes with:
-                                        # $ systemctl daemon-reload; systemctl restart mysql (or mysqld or mariadb)
+innodb_buffer_pool_size         = 10M
+innodb_log_buffer_size          = 256K
+max_connections                 = 50
+key_buffer_size                 = 8
+thread_cache_size               = 0
+host_cache_size                 = 0
+innodb_ft_cache_size            = 1600000
+innodb_ft_total_cache_size      = 32000000
 
-max_heap_table_size             = 128M  # Increase to 256M or 512M if you have lots of temporary tables because of missing indices in JOINs
-tmp_table_size                  = 128M  # Use same value as max_heap_table_size
-
-# === Search Settings ===
-ft_min_word_len                 = 3     # Minimum length of words to be indexed for search results
-
-# === Binary Logging ===
-disable_log_bin                 = 1     # Binary logging disabled by default
-#log_bin                                # To enable binary logging, uncomment this line & only one of the following 2 lines
-                                        # that corresponds to your actual MySQL/MariaDB version.
-                                        # Remember to comment out the line with "disable_log_bin".
-#expire_logs_days               = 1     # Keep logs for 1 day - For MySQL 5.x & MariaDB before 10.6 only
-#binlog_expire_logs_seconds     = 86400 # Keep logs for 1 day (in seconds) - For MySQL 8+ & MariaDB 10.6+ only
+# per thread or per operation settings
+thread_stack                    = 131072
+sort_buffer_size                = 32K
+read_buffer_size                = 8200
+read_rnd_buffer_size            = 8200
+max_heap_table_size             = 16K
+tmp_table_size                  = 1K
+bulk_insert_buffer_size         = 0
+join_buffer_size                = 128
+net_buffer_length               = 1K
+innodb_sort_buffer_size         = 64K
 
 # === Error & Slow Query Logging ===
 log_queries_not_using_indexes   = 1     # Disabled on production
