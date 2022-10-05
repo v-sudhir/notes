@@ -50,30 +50,8 @@ skip_ssl
 interactive_timeout             = 10
 wait_timeout                    = 10
 
-binlog_expire_logs_seconds      = 86400
+innodb_buffer_pool_size         = 16M
 
-innodb_buffer_pool_size         = 10M
-innodb_log_buffer_size          = 256K
-max_connections                 = 50
-key_buffer_size                 = 8
-thread_cache_size               = 0
-host_cache_size                 = 0
-innodb_ft_cache_size            = 1600000
-innodb_ft_total_cache_size      = 32000000
-
-# per thread or per operation settings
-thread_stack                    = 131072
-sort_buffer_size                = 32K
-read_buffer_size                = 8200
-read_rnd_buffer_size            = 8200
-max_heap_table_size             = 16K
-tmp_table_size                  = 1K
-bulk_insert_buffer_size         = 0
-join_buffer_size                = 128
-net_buffer_length               = 1K
-innodb_sort_buffer_size         = 64K
-
-# === Error & Slow Query Logging ===
 log_queries_not_using_indexes   = 1     # Disabled on production
 long_query_time                 = 5
 slow_query_log                  = 1     # Disabled on production
