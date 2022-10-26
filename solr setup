@@ -21,14 +21,17 @@ curl "http://127.0.0.1:8983/solr/storeshopper/update?stream.body=<delete><query>
 
 #Switching from Managed Schema to Manually Edited schema.xml
 Rename the managed-schema file to schema.xml.
-Modify solrconfig.xml to replace the schemaFactory class.
-Remove any ManagedIndexSchemaFactory definition if it exists.
 
-#Add a  ClassicIndexSchemaFactory definition as shown below
-<schemaFactory class="ClassicIndexSchemaFactory"/>
-#remove unknown fields
-
-
+# Open solrconfig.xml - 
+    You will find this
+     <schemaFactory class="ManagedIndexSchemaFactory">
+       <bool name="mutable">true</bool>
+       <str name="managedSchemaResourceName">managed-schema</str>
+     </schemaFactory>
+# Change to    
+      <schemaFactory class="ClassicIndexSchemaFactory">
+      </schemaFactory>
+      
 # Configuring Solr Master
 Edit core.properties
     enable.master=true
