@@ -1,5 +1,10 @@
 Install php 8.0, apache, mysql server and memcached on CentOS 8
 
+# Enable Fastmirror
+vi /etc/yum.conf
+fastestmirror=1
+max_parallel_downloads=8
+
 yum install epel-release
 yum update -y
 
