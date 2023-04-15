@@ -1,5 +1,14 @@
-# vi /etc/systemd/system/solr.service
+# Install Apache Solr
+yum install java-11-openjdk  
+wget https://dlcdn.apache.org/solr/solr/9.0.0/solr-9.2.0.tgz
+tar xzf solr-9.2.0.tgz solr-9.2.0/bin/install_solr_service.sh --strip-components=2
+bash ./install_solr_service.sh solr-9.2.0.tgz 
 
+# Create a New Collection
+su - solr -c "/opt/solr/bin/solr create -c product -n data_driven_schema_configs" 
+
+
+# vi /etc/systemd/system/solr.service
 [Unit]
 Description=Apache SOLR
 After=syslog.target network.target remote-fs.target nss-lookup.target systemd-journald-dev-log.socket
@@ -20,7 +29,7 @@ TimeoutSec=180s
 [Install]
 WantedBy=multi-user.target graphical.target
 
-
+# Manageing Apache Solr Service
 systemctl daemon-reload
 systemctl enable solr.service
 systemctl start solr.service
