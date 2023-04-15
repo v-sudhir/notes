@@ -17,7 +17,7 @@ Conflicts=shutdown.target
 
 [Service]
 User=solr
-PIDFile=/opt/solr/solr-8983.pid
+PIDFile=/var/run/solr-8983.pid
 Environment=SOLR_INCLUDE=/etc/default/solr.in.sh
 ExecStart=/opt/solr/bin/solr start
 ExecStop=/opt/solr/bin/solr stop
