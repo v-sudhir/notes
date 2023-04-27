@@ -8,3 +8,6 @@ $ vi /etc/security/limits.conf
 * hard     nofile         65535
 
 ulimit -a
+
+# set ulimit at runtime
+ulimit -n 65536
