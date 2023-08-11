@@ -31,9 +31,8 @@ vi /etc/php.d/40-msgpack.ini
 pecl install memcached
 vi /etc/php.d/50-memcached.ini
     extension=memcached.so
-```
+
 # auto start services
-```bash
 systemctl enable php-fpm mysqld httpd memcached
 systemctl start php-fpm mysqld httpd memcached
 ```
@@ -85,4 +84,5 @@ sudo nano /etc/apache2/sites-available/domain.conf
 
 # Now you can enable the new Apache configuration. 
 sudo a2ensite domain.conf
+usermod -a -G vboxsf www-data
 ```
