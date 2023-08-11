@@ -1,5 +1,5 @@
 Install php 8.0, apache, mysql server and memcached on CentOS 8
-
+```bash
 # Enable Fastmirror
 vi /etc/yum.conf
 fastestmirror=1
@@ -10,14 +10,16 @@ yum update -y
 
 yum module reset php
 yum module enable php:8.0
+```
 
+```bash
 # Install default packages
-
 yum install php-opcache php-ffi php-pear.noarch php-pdo php-mysqlnd php-mbstring php-intl php-json php-fpm php-devel php-cli php-bcmath php-pecl-zip httpd memcached mysql-server
 
 # Install php-memcached extension
 yum install libmemcached-devel zlib-devel fastlz-devel libevent-devel libcurl-devel libxml2-devel
-
+```
+```bash
 pecl install igbinary
 vi /etc/php.d/40-igbinary.ini
     extension=igbinary.so
@@ -29,19 +31,20 @@ vi /etc/php.d/40-msgpack.ini
 pecl install memcached
 vi /etc/php.d/50-memcached.ini
     extension=memcached.so
-
+```
 # auto start services
+```bash
 systemctl enable php-fpm mysqld httpd memcached
-
 systemctl start php-fpm mysqld httpd memcached
-
+```
+```bash
 # set password
 mysql -u root -p
     ALTER USER 'root'@'localhost' IDENTIFIED BY 'Mysql.123';
-
 # Add apache user to vbox user
 usermod -a -G vboxsf apache
-
+```
+```bash
 vi /etc/my.cnf
 #for mysql 8 with 1GB Ram
 
@@ -61,12 +64,14 @@ log_queries_not_using_indexes   = 1     # Disabled on production
 long_query_time                 = 5
 slow_query_log                  = 1     # Disabled on production
 slow_query_log_file             = /var/lib/mysql/mysql_slow.log
-
+```
 CentOS 9 Apache
+```bash
 vi /etc/httpd/conf/httpd.conf
 EnableSendfile Off
-
+```
 On Ubuntu
+```bash
 sudo apt-get install virtualbox-guest-additions-iso
 sudo apt install build-essential dkms
 mount /usr/share/virtualbox/VBoxGuestAdditions.iso /mnt
@@ -80,4 +85,4 @@ sudo nano /etc/apache2/sites-available/domain.conf
 
 # Now you can enable the new Apache configuration. 
 sudo a2ensite domain.conf
-
+```
