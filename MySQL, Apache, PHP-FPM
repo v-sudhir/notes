@@ -66,3 +66,18 @@ CentOS 9 Apache
 vi /etc/httpd/conf/httpd.conf
 EnableSendfile Off
 
+On Ubuntu
+sudo apt-get install virtualbox-guest-additions-iso
+sudo apt install build-essential dkms
+mount /usr/share/virtualbox/VBoxGuestAdditions.iso /mnt
+
+sudo apt install php7.2-fpm php7.2-common php7.2-mysql php7.2-xml php7.2-xmlrpc php7.2-curl php7.2-gd php7.2-cli php7.2-dev php7.2-mbstring php7.2-soap php7.2-zip php7.2-bcmath php7.2-zip php7.2-tidy php7.2-opcache php7.2-intl php-pear php-solr php-memcached php-igbinary php-msgpack
+apt install apache2
+a2enmod actions fcgid alias proxy_fcgi 
+
+# Create a new Apache vhost configuration. 
+sudo nano /etc/apache2/sites-available/domain.conf
+
+# Now you can enable the new Apache configuration. 
+sudo a2ensite domain.conf
+
