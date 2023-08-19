@@ -63,6 +63,9 @@ log_queries_not_using_indexes   = 1     # Disabled on production
 long_query_time                 = 5
 slow_query_log                  = 1     # Disabled on production
 slow_query_log_file             = /var/lib/mysql/mysql_slow.log
+
+general_log                     = 1     # Disabled on production
+general_log_file                = /var/lib/mysql/general.log
 ```
 CentOS 9 Apache
 ```bash
