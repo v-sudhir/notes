@@ -43,29 +43,70 @@ mysql -u root -p
 # Add apache user to vbox user
 usermod -a -G vboxsf apache
 ```
-```bash
+```cnf
 vi /etc/my.cnf
 #for mysql 8 with 1GB Ram
 
-bind_address        = 0.0.0.0 # Change to 0.0.0.0 to allow remote connections
-max_connect_errors  = 1000000
+# Data Storage
+datadir = /var/lib/mysql
 
+# Networking
+bind-address = 0.0.0.0
+interactive_timeout = 10
+wait_timeout = 10
+skip-name-resolve
+
+# InnoDB Storage Engine
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_flush_log_at_trx_commit = 2
+innodb_flush_method = O_DIRECT
+innodb_log_buffer_size = 8M
+innodb_log_file_size = 32M
+innodb_thread_concurrency = 0
+
+# Connection and Thread Settings
+max_connections = 50
+thread_cache_size = 4
+thread_stack = 192K
+
+# Temp Tables
+tmp_table_size = 32M
+max_heap_table_size = 32M
+
+# Performance and Memory
+table_open_cache = 64
+max_allowed_packet = 16M
+sort_buffer_size = 512K
+read_buffer_size = 256K
+read_rnd_buffer_size = 512K
+myisam_sort_buffer_size = 8M
+thread_stack = 192K
+
+# Temporary Files
+tmpdir = /tmp
+
+# Character Sets
+character_set_server = utf8mb4
+collation_server = utf8mb4_unicode_ci
+
+# InnoDB Settings
+innodb_file_per_table = 1
+innodb_flush_neighbors = 0
+
+# Additional Settings
+innodb_doublewrite = 0
 skip_external_locking
-skip_name_resolve # Disabling DNS resolution
-skip_ssl
 
-interactive_timeout             = 10
-wait_timeout                    = 10
+# Logging
+general_log = 1
+general_log_file = /var/log/mysql/general.log
+slow_query_log = 1
+long_query_time = 5
+slow_query_log_file = /var/log/mysql/mysql-slow.log
 
-innodb_buffer_pool_size         = 16M
-
-log_queries_not_using_indexes   = 1     # Disabled on production
-long_query_time                 = 5
-slow_query_log                  = 1     # Disabled on production
-slow_query_log_file             = /var/lib/mysql/mysql_slow.log
-
-general_log                     = 1     # Disabled on production
-general_log_file                = /var/lib/mysql/general.log
+# Others
+max_connect_errors  = 1000000
 ```
 CentOS 9 Apache
 ```bash
