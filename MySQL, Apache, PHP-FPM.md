@@ -21,16 +21,16 @@ yum install libmemcached-devel zlib-devel fastlz-devel libevent-devel libcurl-de
 ```
 ```bash
 pecl install igbinary
-vi /etc/php.d/40-igbinary.ini
-    extension=igbinary.so
+echo "extension=igbinary.so" > /etc/php.d/40-igbinary.ini
 
 pecl install msgpack
-vi /etc/php.d/40-msgpack.ini
-    extension=msgpack.so
+echo "extension=msgpack.so" > vi /etc/php.d/40-msgpack.ini
+
+pecl install redis
+echo "extension=redis.so" > /etc/php.d/40-redis.ini
 
 pecl install memcached
-vi /etc/php.d/50-memcached.ini
-    extension=memcached.so
+echo "extension=memcached.so" > /etc/php.d/50-memcached.ini
 
 # auto start services
 systemctl enable php-fpm mysqld httpd memcached
