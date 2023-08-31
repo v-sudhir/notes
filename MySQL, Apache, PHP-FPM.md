@@ -24,7 +24,7 @@ pecl install igbinary
 echo "extension=igbinary.so" > /etc/php.d/40-igbinary.ini
 
 pecl install msgpack
-echo "extension=msgpack.so" > vi /etc/php.d/40-msgpack.ini
+echo "extension=msgpack.so" > /etc/php.d/40-msgpack.ini
 
 pecl install redis
 echo "extension=redis.so" > /etc/php.d/40-redis.ini
