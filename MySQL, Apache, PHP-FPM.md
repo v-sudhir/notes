@@ -17,7 +17,7 @@ yum module enable php:8.0
 yum install php-opcache php-ffi php-pear.noarch php-pdo php-mysqlnd php-mbstring php-intl php-json php-fpm php-devel php-cli php-bcmath php-pecl-zip httpd memcached mysql-server
 
 # Install php-memcached extension
-yum install libmemcached-devel zlib-devel fastlz-devel libevent-devel libcurl-devel libxml2-devel
+yum install zlib-devel fastlz-devel libevent-devel libcurl-devel libxml2-devel libzstd libmemcached-devel
 ```
 ```bash
 pecl install igbinary
