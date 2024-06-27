@@ -7,12 +7,9 @@ sh ./VBoxLinuxAdditions.run --nox11
 
 # Install on OL7
 ```bash
-[ol7_developer]
-name=Oracle Linux $releasever Development Packages ($basearch)
-baseurl=http://yum.oracle.com/repo/OracleLinux/OL7/developer/$basearch/
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
-gpgcheck=1
-enabled=1
-
-yum install kmod-vboxguest-uek4.x86_64 vboxguest-tools.x86_64
+# Oracle Linux 9
+dnf install epel-release -y
+dnf install dkms kernel-uek-devel gcc make bzip2 perl elfutils-libelf-devel
+sudo dnf update kernel-uek-* kernel-uek
+sh ./VBoxLinuxAdditions.run
 ```
