@@ -5,7 +5,7 @@ sh ./VBoxLinuxAdditions.run --nox11
 # The --nox11 option tells the installer not to spawn an xterm window.
 ```
 
-# Install on OL7
+# Install on Oracle Linux
 ```bash
 # Oracle Linux 9
 dnf install epel-release -y
