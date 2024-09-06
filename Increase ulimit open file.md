@@ -1,5 +1,5 @@
 $ vi /etc/sysctl.conf
-```
+```bash
 # Disable IP forwarding
 net.ipv4.ip_forward = 0
 
@@ -33,7 +33,7 @@ net.ipv4.icmp_ignore_bogus_error_responses = 1
 fs.file-max = 65536
 ```
 $ vi /etc/security/limits.conf
-```
+```bash
 * soft     nproc          65535
 * hard     nproc          65535
 * soft     nofile         65535
