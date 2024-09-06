@@ -1,4 +1,5 @@
 $ vi /etc/sysctl.conf
+
 ```bash
 # Disable IP forwarding
 net.ipv4.ip_forward = 0
@@ -38,8 +39,8 @@ $ vi /etc/security/limits.conf
 * hard     nproc          65535
 * soft     nofile         65535
 * hard     nofile         65535
-
-ulimit -a```
-
+ulimit -a
 # set ulimit at runtime
 ulimit -n 65536
+```
+``
