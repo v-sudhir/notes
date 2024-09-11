@@ -16,6 +16,9 @@ yum module enable php:8.0
 # Install default packages
 yum install php-opcache php-sodium php-pear.noarch php-pdo php-mysqlnd php-mbstring php-intl php-json php-fpm php-devel php-cli php-bcmath php-pecl-zip httpd memcached mysql-server
 
+# install composer
+export COMPOSER_RUNTIME_ENV=virtualbox
+
 # Install php-memcached extension
 yum install zlib-devel fastlz-devel libevent-devel libcurl-devel libxml2-devel libzstd libmemcached-devel
 ```
@@ -129,6 +132,8 @@ a2enconf php7.2-fpm
 
 # Create a new Apache vhost configuration. 
 sudo nano /etc/apache2/sites-available/domain.conf
+
+
 
 # Now you can enable the new Apache configuration. 
 sudo a2ensite domain.conf
