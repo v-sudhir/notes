@@ -33,7 +33,7 @@ pecl install redis
 echo "extension=redis.so" > /etc/php.d/40-redis.ini
 
 pecl install memcached
-echo "extension=memcached.so" > /etc/php.d/50-memcached.ini
+echo "extension=memcached.so" | tee /etc/php.d/50-memcached.ini
 
 # auto start services
 systemctl enable php-fpm mysqld httpd memcached
